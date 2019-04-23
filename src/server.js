@@ -6,9 +6,9 @@ class App {
   constructor () {
     this.express = express()
     this.isDev = process.env.NODE_ENV !== 'production'
-    midlewares()
-    views()
-    routes()
+    this.midlewares()
+    this.views()
+    this.routes()
   }
 
   midlewares () {
@@ -22,6 +22,8 @@ class App {
     })
     this.express.set('view engine', 'njk')
   }
-  routes () {}
+  routes () {
+    this.express.use(require('./routes'))
+  }
 }
 module.exports = new App().express
