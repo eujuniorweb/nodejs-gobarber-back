@@ -1,4 +1,5 @@
 const { User } = require('../models')
+
 class UserController {
   create (req, res) {
     return res.render('auth/signup')
