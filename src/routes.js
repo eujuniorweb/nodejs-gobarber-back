@@ -1,4 +1,5 @@
 import { Router } from 'express';
+import User from './app/models/User';
 // const multerConfig = require('./config/multer')
 // const upload = require('multer')(multerConfig)
 const routes = new Router();
@@ -18,7 +19,14 @@ const routes = new Router();
 // });
 // routes.get("/files/:file", FileController.show);
 // routes.get("/", guestMiddleware, SessionController.create);
-routes.get('/', (req, res) => res.json({ message: 'hello world' }));
+routes.get('/', async (req, res) => {
+  const user = await User.create({
+    name: 'adminstrador',
+    email: 'administrador@gmail.com',
+    password_hash: '1234567890',
+  });
+  return res.json(user);
+});
 // routes.post("/signin", SessionController.store);
 // routes.get("/signup", guestMiddleware, UserController.create);
 // routes.post("/signup", upload.single("avatar"), UserController.store);

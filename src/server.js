@@ -1,5 +1,7 @@
 import express from 'express';
 import routes from './routes';
+
+import './database';
 // const session = require("express-session");
 // const FileStore = require("session-file-store")(session);
 // const nunjucks = require("nunjucks");
