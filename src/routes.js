@@ -1,4 +1,4 @@
-const { Router } = require("express");
+import { Router } from 'express';
 // const multerConfig = require('./config/multer')
 // const upload = require('multer')(multerConfig)
 const routes = new Router();
@@ -18,9 +18,7 @@ const routes = new Router();
 // });
 // routes.get("/files/:file", FileController.show);
 // routes.get("/", guestMiddleware, SessionController.create);
-routes.get("/", (req, res) => {
-  return res.json({ message: "hello world" });
-});
+routes.get('/', (req, res) => res.json({ message: 'hello world' }));
 // routes.post("/signin", SessionController.store);
 // routes.get("/signup", guestMiddleware, UserController.create);
 // routes.post("/signup", upload.single("avatar"), UserController.store);
@@ -30,4 +28,4 @@ routes.get("/", (req, res) => {
 // routes.get("/app/dashboard", DashboardController.index);
 // routes.get("/app/appointments/new/:provider", AppointmentController.create);
 
-module.exports = routes;
+export default routes;

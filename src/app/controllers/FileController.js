@@ -1,8 +1,9 @@
-const { User } = require('../models')
-const path = require('path')
+const path = require('path');
+const { User } = require('../models');
+
 class UserController {
-  show (req, res) {
-    const { file } = req.params
+  show(req, res) {
+    const { file } = req.params;
     const filePath = path.resolve(
       __dirname,
       '..',
@@ -11,8 +12,8 @@ class UserController {
       'tmp',
       'uploads',
       file
-    )
-    return res.sendFile(filePath)
+    );
+    return res.sendFile(filePath);
   }
 }
-module.exports = new UserController()
+module.exports = new UserController();

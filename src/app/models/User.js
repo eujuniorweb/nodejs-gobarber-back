@@ -1,4 +1,5 @@
-const bcrypt = require('bcrypt')
+const bcrypt = require('bcrypt');
+
 module.exports = (sequelize, Datatypes) => {
   const User = sequelize.define(
     'User',
@@ -8,20 +9,20 @@ module.exports = (sequelize, Datatypes) => {
       avatar: Datatypes.STRING,
       password: Datatypes.VIRTUAL,
       password_hash: Datatypes.STRING,
-      provider: Datatypes.BOOLEAN
+      provider: Datatypes.BOOLEAN,
     },
     {
       hooks: {
         beforeSave: async user => {
           if (user.password) {
-            user.password_hash = await bcrypt.hash(user.password, 8)
+            user.password_hash = await bcrypt.hash(user.password, 8);
           }
-        }
-      }
+        },
+      },
     }
-  )
-  User.prototype.checkPassword = function (password) {
-    return bcrypt.compare(password, this.password_hash)
-  }
-  return User
-}
+  );
+  User.prototype.checkPassword = function(password) {
+    return bcrypt.compare(password, this.password_hash);
+  };
+  return User;
+};

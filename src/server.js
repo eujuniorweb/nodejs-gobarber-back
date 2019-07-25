@@ -1,5 +1,5 @@
-const express = require("express");
-const routes = require("./routes");
+import express from 'express';
+import routes from './routes';
 // const session = require("express-session");
 // const FileStore = require("session-file-store")(session);
 // const nunjucks = require("nunjucks");
@@ -9,7 +9,7 @@ const routes = require("./routes");
 class App {
   constructor() {
     this.express = express();
-    this.isDev = process.env.NODE_ENV !== "production";
+    this.isDev = process.env.NODE_ENV !== 'production';
     this.midlewares();
     // this.views();
     this.routes();
@@ -32,6 +32,7 @@ class App {
     //   })
     // );
   }
+
   // views() {
   //   nunjucks.configure(path.resolve(__dirname, "app", "views"), {
   //     autoescape: true,
@@ -42,7 +43,7 @@ class App {
   //   this.express.set("view engine", "njk");
   // }
   routes() {
-    this.express.use(require("./routes"));
+    this.express.use(routes);
   }
 }
-module.exports = new App(routes).express;
+export default new App(routes).express;
