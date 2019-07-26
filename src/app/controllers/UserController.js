@@ -1,4 +1,4 @@
-const { User } = require('../models');
+import User from '../models/User';
 
 class UserController {
   create(req, res) {
@@ -6,9 +6,17 @@ class UserController {
   }
 
   async store(req, res) {
-    const { filename } = req.file;
-    await User.create({ ...req.body, avatar: filename });
-    return res.redirect('/');
+    const userExists = await User.findOne({ where: { email: req.body.email } });
+    if (userExists) {
+      return res.status(400).json({ error: 'user already exists' });
+    }
+    const { id, name, email, provider } = await User.create(req.body);
+    return res.json({
+      id,
+      name,
+      email,
+      provider,
+    });
   }
 }
-module.exports = new UserController();
+export default new UserController();

@@ -1,9 +1,9 @@
 import { Router } from 'express';
-import User from './app/models/User';
+import UserController from './app/controllers/UserController';
 // const multerConfig = require('./config/multer')
 // const upload = require('multer')(multerConfig)
 const routes = new Router();
-// const UserController = require("./app/controllers/UserController");
+routes.post('/users', UserController.store);
 // const SessionController = require("./app/controllers/SessionController");
 // const DashboardController = require("./app/controllers/DashboardController");
 // const FileController = require("./app/controllers/FileController");
@@ -19,14 +19,6 @@ const routes = new Router();
 // });
 // routes.get("/files/:file", FileController.show);
 // routes.get("/", guestMiddleware, SessionController.create);
-routes.get('/', async (req, res) => {
-  const user = await User.create({
-    name: 'adminstrador',
-    email: 'administrador@gmail.com',
-    password_hash: '1234567890',
-  });
-  return res.json(user);
-});
 // routes.post("/signin", SessionController.store);
 // routes.get("/signup", guestMiddleware, UserController.create);
 // routes.post("/signup", upload.single("avatar"), UserController.store);
