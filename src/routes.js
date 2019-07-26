@@ -1,9 +1,11 @@
 import { Router } from 'express';
 import UserController from './app/controllers/UserController';
+import SessionController from './app/controllers/SessionController';
 // const multerConfig = require('./config/multer')
 // const upload = require('multer')(multerConfig)
 const routes = new Router();
 routes.post('/users', UserController.store);
+routes.post('/sessions', SessionController.store);
 // const SessionController = require("./app/controllers/SessionController");
 // const DashboardController = require("./app/controllers/DashboardController");
 // const FileController = require("./app/controllers/FileController");

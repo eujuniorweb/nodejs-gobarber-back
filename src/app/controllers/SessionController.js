@@ -1,4 +1,6 @@
-const { User } = require('../models');
+import jwt from 'jsonwebtoken';
+import User from '../models/User';
+import authConfig from '../../config/auth';
 
 class SessionController {
   async create(req, res) {
@@ -9,15 +11,22 @@ class SessionController {
     const { email, password } = req.body;
     const user = await User.findOne({ where: { email } });
     if (!user) {
-      req.flash('error', 'Usuário não encontrado');
-      res.redirect('/');
+      res.status(401).json({ error: 'user not found' });
     }
     if (!(await user.checkPassword(password))) {
-      req.flash('error', 'Senha incorreta');
-      res.redirect('/');
+      res.status(401).json({ error: 'password dos not match' });
     }
-    req.session.user = user;
-    return res.redirect('/app/dashboard');
+    const { id, name } = user;
+    return res.json({
+      user: {
+        id,
+        name,
+        email,
+      },
+      token: jwt.sign({ id }, authConfig.secret, {
+        expiresIn: authConfig.expiresIn,
+      }),
+    });
   }
 
   destroy(req, res) {
@@ -27,4 +36,4 @@ class SessionController {
     });
   }
 }
-module.exports = new SessionController();
+export default new SessionController();
