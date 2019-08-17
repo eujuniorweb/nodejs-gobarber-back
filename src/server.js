@@ -1,4 +1,5 @@
 import express from 'express';
+import { resolve } from 'path';
 import routes from './routes';
 
 import './database';
@@ -19,6 +20,10 @@ class App {
 
   midlewares() {
     this.express.use(express.json());
+    this.express.use(
+      '/files',
+      express.static(resolve(__dirname, '..', 'tmp', 'uploads'))
+    );
     // this.express.use(express.urlencoded({ extended: false }));
     // this.express.use(flash());
     // this.express.use(
