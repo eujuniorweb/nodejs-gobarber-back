@@ -12,4 +12,4 @@ class AppointmentController {
     return res.redirect('/');
   }
 }
-module.exports = new AppointmentController();
+export default new AppointmentController();

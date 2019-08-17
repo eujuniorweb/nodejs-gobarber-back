@@ -15,15 +15,18 @@ module.exports = {
         type: Sequelize.INTEGER,
         references: { model: 'users', key: 'id' },
         onUpdate: 'CASCADE',
-        onDelete: 'CASCADE',
+        onDelete: 'SET NULL',
         allowNull: false,
       },
       provider_id: {
         type: Sequelize.INTEGER,
         references: { model: 'users', key: 'id' },
         onUpdate: 'CASCADE',
-        onDelete: 'CASCADE',
+        onDelete: 'SET NULL',
         allowNull: false,
+      },
+      canceled_at: {
+        type: Sequelize.DATE,
       },
       created_at: {
         allowNull: false,
@@ -36,7 +39,7 @@ module.exports = {
     });
   },
 
-  down: (queryInterface, Sequelize) => {
+  down: queryInterface => {
     return queryInterface.dropTable('appointments');
   },
 };
