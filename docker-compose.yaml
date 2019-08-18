@@ -20,6 +20,14 @@ services:
       POSTGRES_DB: gobarber
     networks:
       - skynet
+  mongo:
+    image: mongo
+    container_name: mongobarber
+    restart: always
+    ports:
+      - 27017:27017
+    networks:
+      - skynet
 networks:
   skynet:
     driver: bridge
