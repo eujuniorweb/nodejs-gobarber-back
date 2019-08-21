@@ -1,11 +1,11 @@
 version: '3'
 services:
   webui:
-    image: adminer
+    image: dockette/adminer:full
     container_name: webui
     restart: always
     ports:
-      - 8080:8080
+      - 8000:80
     networks:
       - skynet
   db:
@@ -14,6 +14,8 @@ services:
     restart: always
     ports:
       - 5432:5432
+    volumes:
+      - ./.docker/dbdata:/var/lib/postgresql/data
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
