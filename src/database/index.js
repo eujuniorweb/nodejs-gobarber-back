@@ -23,7 +23,7 @@ class Database {
 
   mongo() {
     this.mongoConnection = mongoose.connect(
-      'mongodb://localhost:27017/gobarber',
+      'mongodb://127.0.0.1:27017/gobarber',
       {
         useNewUrlParser: true,
         useFindAndModify: true,

@@ -1,8 +1,8 @@
 version: '3'
 services:
-  webui:
+  adminer:
     image: dockette/adminer:full
-    container_name: webui
+    container_name: adminer
     restart: always
     ports:
       - 8000:80
@@ -15,7 +15,7 @@ services:
     ports:
       - 5432:5432
     volumes:
-      - ./.docker/dbdata:/var/lib/postgresql/data
+      - ./.docker/pgdata:/var/lib/postgresql/data
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
@@ -24,12 +24,12 @@ services:
       - skynet
   mongo:
     image: mongo
-    container_name: mongobarber
+    container_name: mongo
     restart: always
     ports:
       - 27017:27017
     volumes:
-      - ./.docker/data:/data/db
+      - ./.docker/mongodata:/data/db
     networks:
       - skynet
 networks:
