@@ -32,6 +32,17 @@ services:
       - ./.docker/mongodata:/data/db
     networks:
       - skynet
+  redis:
+    container_name: redisbarber
+    ports:
+      - '6379:6379'
+    volumes:
+      - './.docker/redisdata:/data'
+    restart: always
+    image: 'redis:alpine'
+    networks:
+      - skynet
+
 networks:
   skynet:
     driver: bridge
