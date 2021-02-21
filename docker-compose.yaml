@@ -1,0 +1,48 @@
+version: '3'
+services:
+  adminer:
+    image: dockette/adminer:full
+    container_name: adminer
+    restart: always
+    ports:
+      - 8000:80
+    networks:
+      - skynet
+  db:
+    image: postgres
+    container_name: db
+    restart: always
+    ports:
+      - 5432:5432
+    volumes:
+      - ./.docker/pgdata:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: gobarber
+    networks:
+      - skynet
+  mongo:
+    image: mongo
+    container_name: mongo
+    restart: always
+    ports:
+      - 27017:27017
+    volumes:
+      - ./.docker/mongodata:/data/db
+    networks:
+      - skynet
+  redis:
+    container_name: redisbarber
+    ports:
+      - '6379:6379'
+    volumes:
+      - './.docker/redisdata:/data'
+    restart: always
+    image: 'redis:alpine'
+    networks:
+      - skynet
+
+networks:
+  skynet:
+    driver: bridge

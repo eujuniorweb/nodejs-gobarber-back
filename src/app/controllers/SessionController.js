@@ -1,29 +1,49 @@
-const { User } = require('../models')
+import jwt from 'jsonwebtoken';
+import * as Yup from 'yup';
+import User from '../models/User';
+import authConfig from '../../config/auth';
 
 class SessionController {
-  async create (req, res) {
-    return res.render('auth/signin')
+  async create(req, res) {
+    return res.render('auth/signin');
   }
 
-  async store (req, res) {
-    const { email, password } = req.body
-    const user = await User.findOne({ where: { email } })
+  async store(req, res) {
+    const schema = Yup.object().shape({
+      email: Yup.string()
+        .email()
+        .required(),
+      password: Yup.string().required(),
+    });
+    if (!(await schema.isValid(req.body))) {
+      return res.status(400).json({ error: 'Validation fails' });
+    }
+    const { email, password } = req.body;
+    const user = await User.findOne({ where: { email } });
     if (!user) {
-      req.flash('error', 'Usuário não encontrado')
-      res.redirect('/')
+      res.status(401).json({ error: 'user not found' });
     }
     if (!(await user.checkPassword(password))) {
-      req.flash('error', 'Senha incorreta')
-      res.redirect('/')
+      res.status(401).json({ error: 'password dos not match' });
     }
-    req.session.user = user
-    return res.redirect('/app/dashboard')
+    const { id, name } = user;
+    return res.json({
+      user: {
+        id,
+        name,
+        email,
+      },
+      token: jwt.sign({ id }, authConfig.secret, {
+        expiresIn: authConfig.expiresIn,
+      }),
+    });
   }
-  destroy (req, res) {
+
+  destroy(req, res) {
     req.session.destroy(() => {
-      res.clearCookie('root')
-      return res.redirect('/')
-    })
+      res.clearCookie('root');
+      return res.redirect('/');
+    });
   }
 }
-module.exports = new SessionController()
+export default new SessionController();
